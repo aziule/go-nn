@@ -20,10 +20,12 @@ func (n *Neuron) Process() {
 	var sum float64
 
 	for _, l := range n.LinksIn {
-		sum += n.ActivationFunction(l.InValue * l.Weight)
+		sum += (l.InValue * l.Weight)
 	}
 
-	n.Out = sum
+	n.Out = n.ActivationFunction(sum)
+
+	fmt.Printf("Input %v produces output %v \n", sum, n.Out)
 
 	for _, l := range n.LinksOut {
 		l.Trigger(n.Out)

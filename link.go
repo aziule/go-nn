@@ -7,13 +7,11 @@ import (
 
 type Link struct {
 	InValue float64
-	OutValue float64
 	Weight float64
 }
 
 func (l *Link) Trigger(inValue float64) {
 	l.InValue = inValue
-	l.OutValue = l.InValue * l.Weight
 }
 
 func (l *Link) RandomiseWeight() {
