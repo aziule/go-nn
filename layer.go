@@ -15,7 +15,7 @@ func NewLayer(nbNeurons int) *Layer {
 	return layer
 }
 
-func (layerIn *Layer) LinkTo(layerOut *Layer) {
+func LinkLayers(layerIn, layerOut *Layer) {
 	for _, nIn := range layerIn.Neurons {
 		for _, nOut := range layerOut.Neurons {
 			LinkNeurons(nIn, nOut)

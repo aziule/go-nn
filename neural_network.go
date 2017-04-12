@@ -49,7 +49,7 @@ func NewNeuralNetwork(nbInputs int, nbHiddenLayers int, nbOutputs int) *NeuralNe
 
 func (nn *NeuralNetwork) init() {
 	for i := len(nn.Layers) - 1; i > 0; i-- {
-		nn.Layers[i - 1].LinkTo(nn.Layers[i])
+		LinkLayers(nn.Layers[i - 1], nn.Layers[i])
 	}
 
 	ConnectInputs(nn.Inputs, nn.Layers[0])
