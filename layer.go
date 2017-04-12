@@ -4,15 +4,21 @@ type Layer struct {
 	Neurons []*Neuron
 }
 
-func NewLayer(nbNeurons int) *Layer {
+func NewLayer(nbNeurons int, activationFunction ActivationFunction) *Layer {
 	layer := &Layer{}
 
 	for i := 0; i < nbNeurons; i++ {
-		n :=  NewNeuron()
+		n :=  NewNeuron(activationFunction)
 		layer.Neurons = append(layer.Neurons, n)
 	}
 
 	return layer
+}
+
+func (l *Layer) Process() {
+	for _, n := range l.Neurons {
+		n.Process()
+	}
 }
 
 func LinkLayers(layerIn, layerOut *Layer) {
