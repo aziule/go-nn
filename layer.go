@@ -17,7 +17,7 @@ func NewLayer(nbNeurons int, activationFunction ActivationFunction) *Layer {
 
 func (l *Layer) Process() {
 	for _, n := range l.Neurons {
-		n.Process()
+		n.Activate()
 	}
 }
 

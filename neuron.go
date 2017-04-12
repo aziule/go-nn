@@ -16,7 +16,7 @@ func NewNeuron(activationFunction ActivationFunction) *Neuron {
 	return n
 }
 
-func (n *Neuron) Process() {
+func (n *Neuron) Activate() {
 	var sum float64
 
 	for _, l := range n.LinksIn {
