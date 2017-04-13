@@ -105,7 +105,13 @@ func (nn *NeuralNetwork) setupInputs(values []float64) {
 	}
 }
 
-func (nn *NeuralNetwork) Process(inputs []float64) {
+func (nn *NeuralNetwork) Train(set [][]float64) {
+	for _, row := range set {
+		nn.processInputs(row)
+	}
+}
+
+func (nn *NeuralNetwork) processInputs(inputs []float64) {
 	nn.setupInputs(inputs)
 
 	for _, i := range nn.Inputs {
@@ -119,6 +125,6 @@ func (nn *NeuralNetwork) Process(inputs []float64) {
 	nn.OutputLayer.Process()
 
 	for i, n := range nn.OutputLayer.Neurons {
-		fmt.Printf("Output %v = %v", i, n.Out)
+		fmt.Printf("Output %v = %v \n", i, n.Out)
 	}
 }
