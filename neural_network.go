@@ -29,6 +29,12 @@ fmt.Println("Neurons in hidden layers: ", nbNeuronsInHiddenLayers)
 	return nn
 }
 
+func (nn *NeuralNetwork) Train(set [][]float64) {
+	for _, row := range set {
+		nn.processInputs(row)
+	}
+}
+
 func (nn *NeuralNetwork) print() {
 	fmt.Printf("Number of layers: %d \n", len(nn.Layers))
 	nbLinksInputs := 0
@@ -91,12 +97,6 @@ func (nn *NeuralNetwork) randomise() {
 		}
 	}
 }
-func (nn *NeuralNetwork) Train(set [][]float64) {
-	for _, row := range set {
-		nn.processInputs(row)
-	}
-}
-
 
 func (nn *NeuralNetwork) setupInputs(values []float64) {
 	nbInputs := len(nn.Inputs)
