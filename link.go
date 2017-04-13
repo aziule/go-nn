@@ -15,7 +15,7 @@ func (l *Link) Trigger(inValue float64) {
 }
 
 func (l *Link) RandomiseWeight() {
-	l.Weight = 2 * rand.Float64()
+	l.Weight = rand.Float64()
 	fmt.Printf("Weight: %v \n", l.Weight)
 }
 

@@ -17,14 +17,14 @@ func NewNeuralNetwork(nbInputs int, nbHiddenLayers int, nbOutputs int) *NeuralNe
 	nn := &NeuralNetwork{}
 
 	nbNeuronsInHiddenLayers := int(math.Ceil(float64(nbInputs + nbOutputs) / 2))
-
+fmt.Println("Neurons in hidden layers: ", nbNeuronsInHiddenLayers)
 	nn.initInputs(nbInputs)
 	nn.initHiddenLayers(nbHiddenLayers, nbNeuronsInHiddenLayers)
 	nn.initOutputs(nbOutputs)
 	nn.wire()
 	nn.print()
 
-	nn.randomiseWeights()
+	nn.randomise()
 
 	return nn
 }
@@ -75,7 +75,7 @@ func (nn *NeuralNetwork) wire() {
 	ConnectInputs(nn.Inputs, nn.Layers[0])
 }
 
-func (nn *NeuralNetwork) randomiseWeights() {
+func (nn *NeuralNetwork) randomise() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
 	layersToInit := nn.Layers
@@ -83,6 +83,8 @@ func (nn *NeuralNetwork) randomiseWeights() {
 
 	for _, layer := range layersToInit {
 		for _, n := range layer.Neurons {
+			n.RandomiseBias()
+
 			for _, l := range n.LinksIn {
 				l.RandomiseWeight()
 			}
