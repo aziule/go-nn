@@ -91,6 +91,12 @@ func (nn *NeuralNetwork) randomise() {
 		}
 	}
 }
+func (nn *NeuralNetwork) Train(set [][]float64) {
+	for _, row := range set {
+		nn.processInputs(row)
+	}
+}
+
 
 func (nn *NeuralNetwork) setupInputs(values []float64) {
 	nbInputs := len(nn.Inputs)
@@ -102,12 +108,6 @@ func (nn *NeuralNetwork) setupInputs(values []float64) {
 
 	for index, input := range nn.Inputs {
 		input.Value = values[index]
-	}
-}
-
-func (nn *NeuralNetwork) Train(set [][]float64) {
-	for _, row := range set {
-		nn.processInputs(row)
 	}
 }
 
