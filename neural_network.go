@@ -10,7 +10,7 @@ import (
 type NeuralNetwork struct {
 	Inputs []*Input
 	Layers []*Layer
-	Outputs []float64
+	OutputLayer *Layer
 }
 
 func NewNeuralNetwork(nbInputs int, nbHiddenLayers int, nbOutputs int) *NeuralNetwork {
@@ -20,6 +20,7 @@ func NewNeuralNetwork(nbInputs int, nbHiddenLayers int, nbOutputs int) *NeuralNe
 
 	nn.initInputs(nbInputs)
 	nn.initHiddenLayers(nbHiddenLayers, nbNeuronsInHiddenLayers)
+	nn.initOutputs(nbOutputs)
 	nn.wire()
 	nn.print()
 
@@ -60,10 +61,16 @@ func (nn *NeuralNetwork) initHiddenLayers(nbLayers, nbNeurons int) {
 	}
 }
 
+func (nn *NeuralNetwork) initOutputs(nbOutputs int) {
+	nn.OutputLayer = NewLayer(nbOutputs, sigmoid())
+}
+
 func (nn *NeuralNetwork) wire() {
 	for i := len(nn.Layers) - 1; i > 0; i-- {
 		LinkLayers(nn.Layers[i - 1], nn.Layers[i])
 	}
+
+	LinkLayers(nn.Layers[len(nn.Layers) - 1], nn.OutputLayer)
 
 	ConnectInputs(nn.Inputs, nn.Layers[0])
 }
@@ -71,7 +78,10 @@ func (nn *NeuralNetwork) wire() {
 func (nn *NeuralNetwork) randomiseWeights() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
-	for _, layer := range nn.Layers {
+	layersToInit := nn.Layers
+	layersToInit = append(layersToInit, nn.OutputLayer)
+
+	for _, layer := range layersToInit {
 		for _, n := range layer.Neurons {
 			for _, l := range n.LinksIn {
 				l.RandomiseWeight()
@@ -102,5 +112,11 @@ func (nn *NeuralNetwork) Process(inputs []float64) {
 
 	for _, l := range nn.Layers {
 		l.Process()
+	}
+
+	nn.OutputLayer.Process()
+
+	for i, n := range nn.OutputLayer.Neurons {
+		fmt.Printf("Output %v = %v", i, n.Out)
 	}
 }
