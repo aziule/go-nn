@@ -29,8 +29,10 @@ func (n *Neuron) Activate() {
 	var sum float64
 
 	for _, l := range n.LinksIn {
-		sum += ((l.InValue * l.Weight) + n.Bias)
+		sum += (l.InValue * l.Weight)
 	}
+
+	sum += n.Bias
 
 	n.Out = n.ActivationFunction(sum)
 
