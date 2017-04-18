@@ -2,7 +2,6 @@ package go_nn
 
 import (
 	"math/rand"
-	"fmt"
 )
 
 type Link struct {
@@ -16,7 +15,6 @@ func (l *Link) Trigger(inValue float64) {
 
 func (l *Link) RandomiseWeight() {
 	l.Weight = rand.Float64()
-	fmt.Printf("Weight: %v \n", l.Weight)
 }
 
 func ConnectInput(input *Input, neuron *Neuron) {

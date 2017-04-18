@@ -1,7 +1,6 @@
 package go_nn
 
 import (
-	"fmt"
 	"math/rand"
 )
 
@@ -22,7 +21,6 @@ func NewNeuron(activationFunction ActivationFunction) *Neuron {
 
 func (n *Neuron) RandomiseBias() {
 	n.Bias = rand.Float64()
-	fmt.Printf("Bias: %v \n", n.Bias)
 }
 
 func (n *Neuron) Activate() {
@@ -35,8 +33,6 @@ func (n *Neuron) Activate() {
 	sum += n.Bias
 
 	n.Out = n.ActivationFunction(sum)
-
-	fmt.Printf("Input %v produces output %v \n", sum, n.Out)
 
 	n.feedForward()
 }

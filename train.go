@@ -1,7 +1,6 @@
 package go_nn
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -15,7 +14,6 @@ func (nn *NeuralNetwork) Train(set [][][]float64) {
 }
 
 func (nn *NeuralNetwork) backPropagation(expected []float64) {
-	fmt.Printf("Expected: %v \n", expected)
 	var errorsSum float64
 
 	for i, n := range nn.OutputLayer.Neurons {
