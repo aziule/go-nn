@@ -32,8 +32,16 @@ func (nn *NeuralNetwork) initInputs(nb int) {
 }
 
 func (nn *NeuralNetwork) initHiddenLayers(hiddenLayers []int) {
-	for _, nbInputs := range hiddenLayers {
-		nn.Layers = append(nn.Layers, NewLayer(nbInputs, sigmoid()))
+	if len(hiddenLayers) == 0 {
+		panic(fmt.Sprintf("You must specify at least one hidden layer"))
+	}
+
+	for _, nbNeurons := range hiddenLayers {
+		if nbNeurons <= 0 {
+			panic(fmt.Sprintf("Hidden layers must have at least 1 neuron (%v given)", nbNeurons))
+		}
+
+		nn.Layers = append(nn.Layers, NewLayer(nbNeurons, sigmoid()))
 	}
 }
 
