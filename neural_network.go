@@ -2,7 +2,6 @@ package go_nn
 
 import (
 	"fmt"
-	"math"
 	"time"
 	"math/rand"
 )
@@ -13,13 +12,11 @@ type NeuralNetwork struct {
 	OutputLayer *Layer
 }
 
-func NewNeuralNetwork(nbInputs int, nbHiddenLayers int, nbOutputs int) *NeuralNetwork {
+func NewNeuralNetwork(nbInputs int, hiddenLayers []int, nbOutputs int) *NeuralNetwork {
 	nn := &NeuralNetwork{}
 
-	nbNeuronsInHiddenLayers := int(math.Ceil(float64(nbInputs + nbOutputs) / 2))
-fmt.Println("Neurons in hidden layers: ", nbNeuronsInHiddenLayers)
 	nn.initInputs(nbInputs)
-	nn.initHiddenLayers(nbHiddenLayers, nbNeuronsInHiddenLayers)
+	nn.initHiddenLayers(hiddenLayers)
 	nn.initOutputs(nbOutputs)
 	nn.wire()
 	nn.print()
@@ -55,9 +52,9 @@ func (nn *NeuralNetwork) initInputs(nb int) {
 	}
 }
 
-func (nn *NeuralNetwork) initHiddenLayers(nbLayers, nbNeurons int) {
-	for i := 0; i < nbLayers; i++ {
-		nn.Layers = append(nn.Layers, NewLayer(nbNeurons, sigmoid()))
+func (nn *NeuralNetwork) initHiddenLayers(hiddenLayers []int) {
+	for _, nbInputs := range hiddenLayers {
+		nn.Layers = append(nn.Layers, NewLayer(nbInputs, sigmoid()))
 	}
 }
 
